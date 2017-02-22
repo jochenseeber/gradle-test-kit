@@ -1,0 +1,64 @@
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+
+    dependencies {
+        if(!project.hasProperty("bootstrap")) {
+            classpath group: "me.seeber.gradle", name: "gradle-bintray-config", version: "1.0.0"
+            classpath group: "me.seeber.gradle", name: "gradle-github-config", version: "1.0.0"
+            classpath group: "me.seeber.gradle", name: "gradle-license-config", version: "1.0.0"
+        }
+    }
+}
+
+version = "1.0.0"
+group = "me.seeber.gradle"
+description = "Test helpers for Gradle plugins"
+
+if(project.hasProperty("bootstrap")) {
+    apply plugin: "java"
+    apply plugin: "groovy"
+    apply plugin: "maven"
+}
+else {
+    apply plugin: "me.seeber.distribution.bintray"
+    apply plugin: "me.seeber.distribution.maven"
+    apply plugin: "me.seeber.ide.eclipse"
+    apply plugin: "me.seeber.project.groovy"
+    apply plugin: "me.seeber.repository.github"
+    apply plugin: "me.seeber.setup.license"
+    apply plugin: "me.seeber.validation.checkstyle"
+
+    model {
+        projectConfig {
+            organization.name = "Jochen Seeber"
+            inceptionYear = 2016
+            license {
+                id = "BSD 2-Clause"
+                exclude "*.prefs"
+            }
+        }
+
+        githubConfig { user = "jochenseeber" }
+    }
+}
+
+dependencies {
+    compile(gradleApi())
+    compile(localGroovy())
+    compile(group:"org.spockframework", name: "spock-core", version: "1.0-groovy-2.4") { exclude module: "groovy-all" }
+}
+
+if(project.hasProperty("bootstrap")) {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url = "https://plugins.gradle.org/m2" }
+        jcenter()
+    }
+}
