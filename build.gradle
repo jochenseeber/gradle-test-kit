@@ -9,14 +9,14 @@ buildscript {
 
     dependencies {
         if(!project.hasProperty("bootstrap")) {
-            classpath group: "me.seeber.gradle", name: "gradle-bintray-config", version: "1.0.0"
-            classpath group: "me.seeber.gradle", name: "gradle-github-config", version: "1.0.0"
-            classpath group: "me.seeber.gradle", name: "gradle-license-config", version: "1.0.0"
+            classpath group: "me.seeber.gradle", name: "gradle-bintray-config", version: "1.1.0"
+            classpath group: "me.seeber.gradle", name: "gradle-github-config", version: "1.1.0"
+            classpath group: "me.seeber.gradle", name: "gradle-license-config", version: "1.1.0"
         }
     }
 }
 
-version = "1.0.0"
+version = "1.1.0"
 group = "me.seeber.gradle"
 description = "Test helpers for Gradle plugins"
 
@@ -52,6 +52,8 @@ dependencies {
     compile(gradleApi())
     compile(localGroovy())
     compile(group:"org.spockframework", name: "spock-core", version: "1.0-groovy-2.4") { exclude module: "groovy-all" }
+
+    compileOnly(group: "org.eclipse.jdt", name: "org.eclipse.jdt.annotation", version: "2.0.0")
 }
 
 if(project.hasProperty("bootstrap")) {
