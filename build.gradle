@@ -16,7 +16,7 @@ buildscript {
     }
 }
 
-version = "1.1.0"
+version = "1.1.1-SNAPSHOT"
 group = "me.seeber.gradle"
 description = "Test helpers for Gradle plugins"
 
@@ -51,7 +51,10 @@ else {
 dependencies {
     compile(gradleApi())
     compile(localGroovy())
-    compile(group:"org.spockframework", name: "spock-core", version: "1.0-groovy-2.4") { exclude module: "groovy-all" }
+
+    compile(group:"org.spockframework", name: "spock-core", version: "1.0-groovy-2.4") {
+        exclude(group: "org.codehaus.groovy", module: "groovy-all")
+    }
 
     compileOnly(group: "org.eclipse.jdt", name: "org.eclipse.jdt.annotation", version: "2.0.0")
 }
