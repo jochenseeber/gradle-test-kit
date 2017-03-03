@@ -31,7 +31,9 @@ import java.nio.file.Paths
 
 import org.gradle.api.Project
 import org.gradle.api.Task
+import org.gradle.api.internal.GradleInternal
 import org.gradle.api.internal.project.DefaultProject
+import org.gradle.api.invocation.Gradle
 import org.gradle.model.internal.type.ModelTypes
 import org.gradle.testfixtures.ProjectBuilder
 import org.junit.Before
@@ -85,10 +87,13 @@ abstract class BaseSpecification extends Specification {
         if(project instanceof DefaultProject) {
             project.bindAllModelRules()
             project.modelRegistry.find("tasks", ModelTypes.modelMap(Task))
+            project.projectEvaluationBroadcaster.afterEvaluate(project, project.state)
+        }
 
-            project.allprojects {
-                project.projectEvaluationBroadcaster.afterEvaluate(project, project.state)
-            }
+        Gradle gradle = project.gradle
+
+        if(gradle instanceof GradleInternal) {
+            gradle.buildListenerBroadcaster.projectsEvaluated(gradle)
         }
     }
 
@@ -101,6 +106,10 @@ abstract class BaseSpecification extends Specification {
     protected void subproject(Project parent, String name, @DelegatesTo(Project) Closure closure) {
         File projectDir = new File(parent.projectDir, name)
         Project child = ProjectBuilder.builder().withName(name).withProjectDir(projectDir).withParent(parent).build()
+
+        if(child instanceof DefaultProject) {
+            child.projectEvaluationBroadcaster.afterEvaluate(child, child.state)
+        }
 
         closure.delegate = child
         closure()
