@@ -9,15 +9,15 @@ buildscript {
 
     dependencies {
         if(!project.hasProperty("bootstrap")) {
-            classpath group: "me.seeber.gradle", name: "gradle-bintray-config", version: "1.1.1"
-            classpath group: "me.seeber.gradle", name: "gradle-github-config", version: "1.1.1"
-            classpath group: "me.seeber.gradle", name: "gradle-license-config", version: "1.1.1"
-            classpath group: "me.seeber.gradle", name: "gradle-project-config", version: "1.1.1"
+            classpath group: "me.seeber.gradle", name: "gradle-bintray-config", version: "1.1.2"
+            classpath group: "me.seeber.gradle", name: "gradle-github-config", version: "1.1.2"
+            classpath group: "me.seeber.gradle", name: "gradle-license-config", version: "1.1.2"
+            classpath group: "me.seeber.gradle", name: "gradle-project-config", version: "1.1.2"
         }
     }
 }
 
-version = "1.1.1"
+version = "1.1.2"
 group = "me.seeber.gradle"
 description = "Test helpers for Gradle plugins"
 
